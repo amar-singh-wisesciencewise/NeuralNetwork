@@ -1,0 +1,43 @@
+# depslib dependency file v1.0
+1751097931 source:c:\users\amars\onedrive\documents\codeblk_helloworld\neural\main.c
+	<stdio.h>
+	<stdlib.h>
+	"nn.h"
+	"utils.h"
+
+1750606392 c:\users\amars\onedrive\documents\codeblk_helloworld\neural\nn.h
+
+1750606392 c:\users\amars\onedrive\documents\codeblk_helloworld\neural\utils.h
+	<stdlib.h>
+	<stdio.h>
+
+1751097936 source:c:\users\amars\onedrive\documents\codeblk_helloworld\neural\nn.c
+	"nn.h"
+	<math.h>
+	<stdlib.h>
+	<stdio.h>
+	<stdarg.h>
+
+1751097931 source:c:\users\amars\onedrive\documents\codeblk_helloworld\neuralnetwork\main.c
+	<stdio.h>
+	<stdlib.h>
+	"nn.h"
+	"utils.h"
+
+1750606392 c:\users\amars\onedrive\documents\codeblk_helloworld\neuralnetwork\nn.h
+
+1750606392 c:\users\amars\onedrive\documents\codeblk_helloworld\neuralnetwork\utils.h
+	<stdlib.h>
+	<stdio.h>
+
+1751097936 source:c:\users\amars\onedrive\documents\codeblk_helloworld\neuralnetwork\nn.c
+	"nn.h"
+	<math.h>
+	<stdlib.h>
+	<stdio.h>
+	<stdarg.h>
+
+1751110582 source:c:\users\amars\onedrive\documents\codeblk_helloworld\neuralnetwork\utils.c
+	"utils.h"
+	<string.h>
+
