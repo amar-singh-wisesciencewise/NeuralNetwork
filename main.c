@@ -8,17 +8,17 @@ int main()
    const int nips = 256;
    const int nops = 10;
 
-   float rate = 1.0f;
+   float rate = 10.0f;
    const float eta = 0.99f;
 
-   const int nhid = 28;
+//   const int nhid = 28;
    const int iterations =  128;
 
 
    const Data data =  build("train.data",nips,nops);
    const Data test_data =  build("test.data",nips,nops);
 
-   const NeuralNetwork_Type nn = NNbuild(nips,nhid,nops);
+   const NeuralNetwork_Type nn = NNbuild(nips,nops);
 
    for(int i=0;i<iterations;i++){
 
