@@ -39,8 +39,6 @@ char * readln(FILE * const file){
 
   line[reads] ='\0';
   return line;
-
-
 }
 
 
@@ -80,25 +78,16 @@ void parse(const Data data,char * line,const int row){
         data.in[row][col] = val;
      else
         data.tg[row][col - data.nips] = val;
-
-
  }
-
-
-
 }
 
 void dfree(const Data d){
-
-
     for(int row =0;row<d.rows;row++){
         free(d.in[row]);
         free(d.tg[row]);
     }
-
     free(d.in);
     free(d.tg);
-
 }
 
 
@@ -117,9 +106,6 @@ void shuffle(const Data d){
         d.in[a] = d.in[b];
         d.in[b] = it;
     }
-
-
-
 }
 
 Data build(const char * path,const int nips,const int nops){
@@ -133,7 +119,6 @@ Data build(const char * path,const int nips,const int nops){
     exit(1);
     }
 
-
     const int rows  =lns(file);
     Data data =  ndata(nips,nops,rows);
 
@@ -145,7 +130,6 @@ Data build(const char * path,const int nips,const int nops){
 
     fclose(file);
     return data;
-
 }
 
 

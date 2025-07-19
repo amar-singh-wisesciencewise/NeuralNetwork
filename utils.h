@@ -1,7 +1,6 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-
 typedef struct{
 
     float ** in; /*2D array for inputs */

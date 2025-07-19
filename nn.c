@@ -15,9 +15,9 @@ static float frand();
 
 static void fprop(const NeuralNetwork_Type nn,const float * const in){
    /*Hidden layer 1 neuron values*/
-   for(int i=0; i < nn.nhid[0]; i++){
+   for(int i = 0; i < nn.nhid[0]; i++){
         float sum = 0.0f;
-        for(int j=0; j < nn.nips; j++){
+        for(int j = 0; j < nn.nips; j++){
             sum += in[j] * nn.w[i * nn.nips + j];
         }
         nn.h[0][i] =  act(sum + nn.b[0]);
@@ -27,33 +27,31 @@ static void fprop(const NeuralNetwork_Type nn,const float * const in){
    for(int i=0; i < nn.nhid[1]; i++){
         float sum = 0.0f;
         for(int j=0; j < nn.nhid[0]; j++){
-            sum += in[j] * nn.hw[0][i * nn.nhid[0] + j];
+            sum += nn.h[0][j] * nn.hw[0][i * nn.nhid[0] + j];
         }
         nn.h[1][i] =  act(sum + nn.b[1]);
    }
 
     /*Output layer neuron values*/
-    for(int i=0; i < nn.nops; i++){
+    for(int i = 0; i < nn.nops; i++){
         float sum  = 0.0f;
-        for(int j=0; j < nn.nhid[1]; j++){
+        for(int j = 0; j < nn.nhid[1]; j++){
             sum += nn.h[1][j] * nn.hw[1][i * nn.nhid[1] + j];
         }
         nn.o[i] = act(sum + nn.b[2]);
     }
 }
 
-
 static void bprop(const NeuralNetwork_Type nn,
                   const float *const in,
                   const float * const tg,
                   float rate)
 {
-    float *err_hid = (float *)calloc(nn.nhid[1], sizeof(*err_hid));
-    float *hid = (float *)calloc(nn.nhid[1] * nn.nhid[0], sizeof(*hid));
+    float *err_hid = (float *)calloc(nn.nhid[0], sizeof(*err_hid));
 
-    for(int i=0; i < nn.nhid[1]; i++){
+    for(int i = 0; i < nn.nhid[1]; i++){
         float pd_hid = 0.0f;
-        for(int j=0; j < nn.nops; j++){
+        for(int j = 0; j < nn.nops; j++){
           const float a = pderr(nn.o[j],tg[j]);
           const float b = pdact(nn.o[j]);
 
@@ -62,31 +60,18 @@ static void bprop(const NeuralNetwork_Type nn,
           nn.hw[1][j * nn.nhid[1] + i] -= rate * a * b * nn.h[1][i];
         }
 
-        for(int j=0; j < nn.nhid[0]; j++){
-            hid[i * nn.nhid[0] + j] = rate * pd_hid * pdact(nn.h[1][i]) * nn.hw[0][i * nn.nhid[0] + j];
-        }
-        err_hid[i] = pd_hid;
-    }
-
-    for(int i=0; i < nn.nips; i++){
-        for(int j=0; j < nn.nhid[0]; j++){
-          const float c = pdact(nn.h[0][j]);
-          float pd_hid = 0.0f;
-          for (int k=0; k < nn.nhid[1]; k++) {
-            pd_hid += err_hid[k] * c * nn.hw[0][j * nn.nhid[0] + k];
-          }
-            nn.w[j * nn.nhid[0] + i] -= rate * pd_hid * in[i];
+        for(int j = 0; j < nn.nhid[0]; j++){
+            err_hid[j] += pd_hid * pdact(nn.h[1][i]) * nn.hw[0][i * nn.nhid[0] + j];
+            nn.hw[0][i * nn.nhid[0] + j] -= rate * pd_hid * pdact(nn.h[1][i]) * nn.h[0][j];
         }
     }
-
-    for (int i=0; i < nn.nhid[1]; i++) {
-        for (int j=0; j < nn.nhid[0]; j++) {
-            nn.hw[0][i * nn.nhid[0] + j] -= hid[i * nn.nhid[0] + j];
+    for(int j = 0; j < nn.nhid[0]; j++){
+        for(int k = 0; k < nn.nips; k++){
+            nn.w[j * nn.nips + k] -= rate * err_hid[j] * pdact(nn.h[0][j])* in[k];
         }
     }
 
     free(err_hid);
-    free(hid);
 }
 
 static  void wbrand(const NeuralNetwork_Type nn)
@@ -223,7 +208,6 @@ static float toterr(const float * const tg,const float * const o, const int size
 }
 
 static float pderr(const float a, const float b){
-
    return a - b;
 }
 
@@ -236,6 +220,5 @@ static float pdact(const float a ){
 }
 
 static float frand(){
-
   return rand()/(float)RAND_MAX;
 }

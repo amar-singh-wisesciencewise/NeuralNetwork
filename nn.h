@@ -19,8 +19,8 @@
 #define NUM_OF_INTERNAL_HIDDEN_LAYERS       (2)
 /* Number of nodes in individual hidden layers */
 static const unsigned int nn_hid_lay_nodes[NUM_OF_INTERNAL_HIDDEN_LAYERS] = {
-                                                                      20 /* Node in Layer 1 */,
-                                                                      16 /* Node in Layer 2 */
+                                                                      30 /* Node in Layer 1 */,
+                                                                      24 /* Node in Layer 2 */
                                                                       };
 
 typedef struct

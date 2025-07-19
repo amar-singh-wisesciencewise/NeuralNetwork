@@ -8,7 +8,7 @@ int main()
    const int nips = 256;
    const int nops = 10;
 
-   float rate = 10.0f;
+   float rate = 1.0f;
    const float eta = 0.99f;
 
 //   const int nhid = 28;
@@ -25,7 +25,6 @@ int main()
     shuffle(data);
     float error = 0.0f;
     for(int j=0;j<data.rows;j++){
-
         const float * const in = data.in[j];
         const float * const tg = data.tg[j];
         error +=NNtrain(nn,in,tg,rate);
@@ -33,7 +32,6 @@ int main()
 
     printf("Error %.12f :: learning rate %f\n",(double)error/data.rows,(double)rate);
     rate *=eta;
-
    }
 
    NNsave(nn,"mymodel2.nn");
@@ -52,5 +50,4 @@ int main()
    dfree(test_data);
 
    return 0;
-
 }
